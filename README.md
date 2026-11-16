@@ -49,8 +49,7 @@ JARVIS/
 
 1. **Clone the repository:**
 ```bash
-git clone [https://github.com/marcos-madrigal/jarvis-ai-assistant.git](https://github.com/marcos-madrigal/jarvis-ai-assistant.git)
-cd jarvis-ai-assistant
+git clone https://github.com/marcos-madrigal/jarvis-ai-assistant.git
 ```
 
 2. **Create and activate a virtual environment:**
