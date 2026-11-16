@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>J.A.R.V.I.S. Interface</title>
+    <style>
+        body {
+            background-color: #050b14;
+            color: #00d2ff;
+            font-family:'Consolas', 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Contenedor principal con borde luminoso */
+        .hud-container {
+            width: 80%;
+            height: 80%;
+            border: 2px solid rgba(0, 210, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2), inset 0 0 20px rgba(0, 210, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(0,210,255,0.05) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        /* Animación del anillo central estilo JARVIS */
+        .reactor {
+            width: 100px;
+            height: 100px;
+            border: 3px dashed #00d2ff;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            animation: spin 10s linear infinite;
+            box-shadow: 0 0 15px #00d2ff;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Caja de chat */
+        #chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-top: 1px solid rgba(0, 210, 255, 0.3);
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+        }
+
+        .mensaje-jarvis { color: #00d2ff; text-shadow: 0 0 5px #00d2ff; margin-bottom: 15px;}
+        .mensaje-usuario { color: #ffffff; text-align: right; margin-bottom: 15px; opacity: 0.8;}
+
+        /* Controles de entrada */
+        .controles {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex-grow: 1;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid #00d2ff;
+            color: #fff;
+            padding: 10px;
+            font-family:'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            outline: none;
+        }
+
+        button {
+            background: rgba(0, 210, 255, 0.2);
+            border: 1px solid #00d2ff;
+            color: #00d2ff;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family:'Consolas', 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #00d2ff;
+            color: #000;
+            box-shadow: 0 0 15px #00d2ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hud-container">
+        <!-- El Anillo que da la estética visual -->
+        <div class="reactor"></div>
+        
+        <!-- Aquí aparecen los mensajes -->
+        <div id="chat-box">
+            <div class="mensaje-jarvis">SISTEMAS INICIALIZADOS. INTERFAZ VISUAL EN LÍNEA.</div>
+        </div>
+
+        <!-- Barra para escribir -->
+        <div class="controles">
+            <input type="text" id="input-texto" placeholder="Escriba un comando, señor..." onkeypress="manejarEnter(event)">
+            <button onclick="enviarMensaje()">EJECUTAR</button>
+        </div>
+    </div>
+
+    <!-- Script para conectar la web con el Python de fondo -->
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const inputTexto = document.getElementById("input-texto");
+
+        function agregarMensaje(texto, clase) {
+            const div = document.createElement("div");
+            div.className = clase;
+            // Limpiar asteriscos y formatear saltos de línea
+            let textoLimpio = texto.replace(/\*/g, '').replace(/\n/g, '<br>');
+            div.innerHTML = (clase === 'mensaje-usuario' ? "TÚ: " : "J.A.R.V.I.S.: ") + textoLimpio;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function manejarEnter(event) {
+            if (event.key === "Enter") enviarMensaje();
+        }
+
+        async function enviarMensaje() {
+            const texto = inputTexto.value.trim();
+            if (!texto) return;
+
+            // Muestra tu mensaje en la pantalla
+            agregarMensaje(texto, "mensaje-usuario");
+            inputTexto.value = "";
+
+            // Enviar a Python (app.py)
+            try {
+                const response = await fetch('/procesar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mensaje: texto })
+                });
+                
+                const data = await response.json();
+                
+                // Muestra la respuesta de JARVIS
+                agregarMensaje(data.respuesta, "mensaje-jarvis");
+            } catch (error) {
+                agregarMensaje("ERROR DE CONEXIÓN CON EL NÚCLEO LOCAL.", "mensaje-jarvis");
+            }
+        }
+    </script>
+</body>
+</html>

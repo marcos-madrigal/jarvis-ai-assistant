@@ -1,0 +1,14 @@
+﻿# Entorno virtual y caché de Python
+jarvis_env/
+__pycache__/
+*.py[cod]
+
+# Credenciales y variables de entorno (CRÍTICO)
+.env
+credentials.json
+token.json
+
+# Datos personales y archivos temporales
+*.db
+*.sqlite
+*.mp3
