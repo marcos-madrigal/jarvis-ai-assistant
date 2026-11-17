@@ -1,10 +1,10 @@
-### 🤖 J.A.R.V.I.S. — Asistente Personal de Voz y Productividad (Local-First)
+### J.A.R.V.I.S. — Asistente Personal de Voz y Productividad (Local-First)
 
 Asistente personal modular impulsado por **Ollama** (modelos de lenguaje locales), con síntesis de voz en tiempo real, memoria conversacional persistente en SQLite, interfaz web e integración directa con **Gmail** y **Apple iCloud Calendar**.
 
 ---
 
-### ✨ Características Principales
+### Características Principales
 - **Razonamiento con LLMs Locales (`Ollama`):** Ejecuta inferencia en local con Llama 3.1 sin latencia de APIs externas ni coste por tokens, manteniendo prompts de sistema estructurados y contexto conversacional.
 - **Memoria Persistente (`SQLite`):** Gestor de memoria propio (`memoria.py`) que almacena el historial de conversaciones y el contexto del usuario en una base de datos relacional local (`jarvis_memoria.db`).
 - **Síntesis y Reconocimiento de Voz (`Edge-TTS`):** Generación de voz neuronal natural (`voz.py`) y escucha por micrófono para interacción manos libres.
@@ -16,7 +16,7 @@ Asistente personal modular impulsado por **Ollama** (modelos de lenguaje locales
 
 ---
 
-### 🛠️ Stack Tecnológico
+### Stack Tecnológico
 - **Núcleo e IA:** Python 3.13, Ollama (Llama 3.1)
 - **Backend e Interfaz:** Flask, HTML5, CSS3, JavaScript
 - **Voz y Audio:** `edge-tts`, `SpeechRecognition`, `pygame`
@@ -25,7 +25,7 @@ Asistente personal modular impulsado por **Ollama** (modelos de lenguaje locales
 
 ---
 
-### 📂 Estructura del Proyecto
+### Estructura del Proyecto
 ```text
 JARVIS/
 ├── templates/
@@ -45,7 +45,7 @@ JARVIS/
 
 ---
 
-### 🚀 Ejecución en Local
+### Ejecución en Local
 
 1. **Clona el repositorio:**
 ```bash
